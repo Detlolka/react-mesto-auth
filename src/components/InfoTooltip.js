@@ -7,7 +7,7 @@ const InfoTooltip = ({ isOpen, onClose }) => {
     <div className={`popup popup_tooltip ${isOpen ? 'popup_opened' : null}`}>
       <div className='popup__container popup__container_tooltip'>
         <img
-          alt='иконка'
+          alt='иконка результата'
           className='popup__picture'
           src={isOpen.data ? Success : Failed}
         />

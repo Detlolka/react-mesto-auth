@@ -11,7 +11,8 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import infoTooltip from './InfoTooltip';
 import Login from './Login';
-import Register from './Register'
+import Register from './Register';
+import ProtectedRoute from './ProtectedRoute';
 import api from "../utils/api";
 
 class App extends React.Component {
