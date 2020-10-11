@@ -9,6 +9,8 @@
 @import url("./__picture/popup__picture.css");
 @import url("./__input/__input_invalid/popup__input_invalid.css");
 @import url("./__save/__save_invalid/popup__save_invalid.css");
+@import url("./__container/_tooltip/popup__container_tooltip.css");
+@import url("./__title/_tooltip/popup__title_tooltip.css");
 
 .popup {
     position: fixed;

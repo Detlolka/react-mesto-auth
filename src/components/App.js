@@ -9,6 +9,9 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import infoTooltip from './InfoTooltip';
+import Login from './Login';
+import Register from './Register'
 import api from "../utils/api";
 
 class App extends React.Component {

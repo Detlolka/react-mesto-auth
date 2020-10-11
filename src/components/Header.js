@@ -2,7 +2,6 @@ import React from "react";
 import logo from "../images/logo/logo_header.svg";
 import { Route, useHistory, Link } from 'react-router-dom';
 
-
 function Header({ userMail, onExit }) {
 
   const history = useHistory();
