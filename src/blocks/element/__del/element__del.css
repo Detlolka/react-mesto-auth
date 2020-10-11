@@ -1,0 +1,20 @@
+.element__del {
+    background-image: url("../../../images/delElem.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    position: absolute;
+    right: 15px;
+    top: 18px;
+    border: 0;
+    width: 18px;
+    height: 19px;
+    padding: 0;
+    transition: 0.8s;
+    visibility: hidden;
+}
+
+.element__del:hover {
+    opacity: 0.6;
+    cursor: pointer;    
+}

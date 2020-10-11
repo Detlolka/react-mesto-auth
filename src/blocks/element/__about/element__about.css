@@ -1,0 +1,6 @@
+.element__about {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 21px;
+    margin-right: 15px;
+}
