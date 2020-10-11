@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { authorization } from "../utils/apiAuth";
 
-function Login({ handleLogin, onFail, setOnFail }) {
+function Login({ handleLogin, onError, setError }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,10 +26,10 @@ function Login({ handleLogin, onFail, setOnFail }) {
         if (data.token) {
           clearForm();
           handleLogin();
-          setOnFail("");
+          setError("");
           history.push("/main");
         } else if (data.message) {
-          setOnFail(data.message);
+          setError(data.message);
         }
       })
       .catch((err) => {
@@ -48,14 +48,14 @@ function Login({ handleLogin, onFail, setOnFail }) {
           placeholder="Email"
           onChange={(evt) => setEmail(evt.target.value)}
         />
-        <div className="auth__inputs">
+        <div className="auth__input-box">
           <input
             className="auth__input"
             type="password"
             placeholder="Пароль"
             onChange={(evt) => setPassword(evt.target.value)}
           />
-          <p className="auth__error">{onFail}</p>
+          <p className="auth__error">{onError}</p>
         </div>
         <button type="submit" className="auth__submit-button">
           Войти

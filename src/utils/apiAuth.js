@@ -17,3 +17,39 @@ export const authorization = (email, password) => {
       console.log(err);
     });
 };
+
+export const registration = (email, password) => {
+    return fetch(`${authUrl}/signup`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+    })
+        .then((res) => {
+            return res.json();
+        })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+export const getContents = (jwt) => {
+    return fetch(`${authUrl}/users/me`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => data)
+      .catch((err) => {
+        console.log(err);
+      });
+  };
