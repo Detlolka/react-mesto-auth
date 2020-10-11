@@ -13,8 +13,8 @@ export const authorization = (email, password) => {
       localStorage.setItem("jwt", data.token);
       return data;
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((error) => {
+      console.error(error);
     });
 };
 
@@ -32,8 +32,8 @@ export const registration = (email, password) => {
         .then((res) => {
             return res;
         })
-        .catch((err) => {
-            console.log(err);
+        .catch((error) => {
+            console.error(error);
         });
 }
 
@@ -49,7 +49,7 @@ export const getContents = (jwt) => {
         return res.json();
       })
       .then((data) => data)
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error(error);
       });
   };

@@ -13,20 +13,20 @@ class Main extends React.Component {
           <div className="profile__avatar" onClick={this.props.onEditAvatar}>
             <img
               className="profile__image"
-              src={this.context.userAvatar}
+              src={this.context.avatar}
               alt="Аватарка"
             />
           </div>
           <div className="profile__info">
             <div className="profile__container">
-              <h1 className="profile__title">{this.context.userName}</h1>
+              <h1 className="profile__title">{this.context.name}</h1>
               <button
                 type="button"
                 className="profile__editButton"
                 onClick={this.props.onEditProfile}
               ></button>
             </div>
-            <h2 className="profile__subtitle">{this.context.userAbout}</h2>
+            <h2 className="profile__subtitle">{this.context.about}</h2>
           </div>
           <button
             type="button"

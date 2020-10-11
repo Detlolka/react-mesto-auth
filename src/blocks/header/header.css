@@ -1,11 +1,11 @@
 .header {
     position: relative;
-    width: 100%;
+    max-width: 882px;
     display: flex;
     justify-content: space-between;
     margin: 0 auto 0 auto;
     box-sizing: border-box;
-    padding: 45px 0 41px 0;
+    padding: 0 0 41px 0;
     margin-bottom: 36px;
 }
 

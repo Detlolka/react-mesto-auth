@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useEffect } from 'react';
+import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 import "../index.css";
 import Header from "./Header";
 import Main from "./Main";
@@ -9,216 +11,237 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import infoTooltip from './InfoTooltip';
-import Login from './Login';
-import Register from './Register';
-import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from "./InfoTooltip";
+import Login from "./Login";
+import Register from "./Register";
+import ProtectedRoute from "./ProtectedRoute";
 import api from "../utils/api";
+import { getContents } from "../utils/apiAuth";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isEditProfilePopupOpen: false,
-      isAddPlacePopupOpen: false,
-      isEditAvatarPopupOpen: false,
-      selectedCard: null,
-      isDeletePlacePopupOpen: false,
-      currentUser: {
-        userName: "",
-        userAbout: "",
-        userAvatar: "",
-        userId: "",
-      },
-      cardItems: [],
-      isLoadingUpdate: {
-        editProfile: false,
-        editAvatar: false,
-        createPlace: false,
-      },
-    };
+function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userMail, setUserMail] = useState('');
+  const [onError, setOnError] = useState('');
+
+  const history = useHistory(); 
+  
+  const checkToken = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      getContents(jwt)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);            
+            setUserMail(res.data.email);            
+            history.push('/main');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  function handleLogin () {
+    setLoggedIn(true);
   }
 
-  handleEditProfileClick = () => {
-    this.setState({
-      isEditProfilePopupOpen: true,
-    });
-  };
+  function handleLogout() {
+    setLoggedIn(false);
+  }
 
-  handleEditPlaceClick = () => {
-    this.setState({
-      isAddPlacePopupOpen: true,
-    });
-  };
+  useEffect(() => {
+    checkToken();
+  }, [loggedIn]);
 
-  handleEditAvatarClick = () => {
-    this.setState({
-      isEditAvatarPopupOpen: true,
-    });
-  };
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isDeletePlacePopupOpen, setDeletePlacePopupOpen] = useState(false);
+  const [isRegisterPopupOpen, setRegisterPopupOpen] = useState(false);  
+  const [cardDate, setCardDate] = useState(null);
 
-  handleEditDeleteClick = () => {
-    this.setState({
-      isDeletePlacePopupOpen: true,
-    });
-  };
+  const [currentUser, setCurrentUser] = useState({    
+    name: '',
+    about: '',
+    avatar: '',
+    _id: '',
+    cohort: '',
+  });
+  
+  function handleEditProfileClick () {    
+      setEditProfilePopupOpen(true);  
+  }
 
-  handleEditImageClick = (cardImage) => {
-    this.setState({
-      selectedCard: cardImage,
-    });
-  };
+  function handleEditPlaceClick () {    
+      setAddPlacePopupOpen(true);    
+  }
 
-  closeAllPopups = () => {
-    this.setState({
-      isEditProfilePopupOpen: false,
-      isAddPlacePopupOpen: false,
-      isEditAvatarPopupOpen: false,
-      selectedCard: null,
-      isDeletePlacePopupOpen: false,
+  function handleEditAvatarClick () {
+      setEditAvatarPopupOpen(true);
+  }
+
+  function handleEditDeleteClick () {
+      setDeletePlacePopupOpen(true);
+  }
+
+  function handleEditImageClick (card) {
+    setCardDate ({
+      name: card.name,
+      link: card.link,
     });
-  };
+  }  
+
+  function closeAllPopups () {    
+      setEditProfilePopupOpen(false);
+      setAddPlacePopupOpen(false);
+      setEditAvatarPopupOpen(false);
+      setCardDate(null)
+      setDeletePlacePopupOpen(false);
+      setRegisterPopupOpen(false);    
+  }
 
   //смена данных пользователя
-  handleUpdateUser = (name, about) => {
+  function handleUpdateUser (name, about) {
     api
       .changeUserInfo(name, about)
-      .then((user) =>
-        this.setState({
-          currentUser: {
-            ...this.state.currentUser,
-            userName: user.name,
-            userAbout: user.about,
-          },
-        })
-      )
+      .then((user) => {       
+          setCurrentUser(user);        
+      })
       .catch((err) => console.error(err));
   };
 
   //Смена аватара пользователя
-  handleUpdateAvatar = (avatar) => {
+  function handleUpdateAvatar (avatar) {
     api
       .changeAvatar(avatar)
-      .then((user) =>
-        this.setState({
-          currentUser: {
-            ...this.state.currentUser,
-            userAvatar: user.avatar,
-          },
-        })
-      )
+      .then((user) => {
+        setCurrentUser(user);
+     })
       .catch((err) => console.error(err));
   };
 
-  //Удаление карточки и пересоздание массива
-  handleCardDelete = (cardId) => {
+  const [deleteCard, setDeleteCard] = React.useState({});
+
+//Удаление карточки
+  function removeCard (props) {    
+    handleEditDeleteClick();
+    setDeleteCard(props);
+  }
+
+  function handleCardDelete (cardId) {
     api
       .removeCard(cardId)
       .then((res) => {
-        const newCards = this.state.cardItems.filter((c) => c._id !== cardId);
-        this.setState({
-          cardItems: newCards,
-        });
+        const newCards = cards.filter((c) => c._id !== deleteCard._id);
+        setCards(newCards)
       })
       .catch((err) => console.error(err));
   };
 
   //Постановка лайка и удаление лайка
-  changeCardLike = (card) => {
+  function changeCardLike (card) {
     const isLiked = card.likes.some(
-      (i) => i._id === this.state.currentUser.userId
+      (i) => i._id === currentUser._id
     );
     api
       .likeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        const newCards = this.state.cardItems.map((c) =>
+        const newCards = cards.map((c) =>
           c._id === card._id ? newCard : c
         );
-        this.setState({
-          cardItems: newCards,
-        });
+        setCards(newCards);
       })
       .catch((err) => console.error(err));
   };
 
   //Добавление новой карточки
-  handleAddPlace = (name, link) => {
+  function handleAddPlace (name, link) {
     api
       .createCard(name, link)
-      .then((newCard) => {
-        this.setState({
-          cardItems: [newCard, ...this.state.cardItems],
-        });
+      .then((newCard) => {        
+          setCards([newCard, ...cards])        
       })
       .catch((err) => console.error(err));
   };
 
-  //Перенесен Api в App
-  componentDidMount() {
+  const [cards, setCards] = useState([])
+
+  useEffect(() => {
     Promise.all([api.getInitialCards(), api.getUserInfo()])
       .then(([cardItems, user]) => {        
-        this.setState({
-          currentUser: {
-            userName: user.name,
-            userAbout: user.about,
-            userAvatar: user.avatar,
-            userId: user._id,
-          },
-          cardItems,
-        });
-      })
+          setCurrentUser(user)
+          setCards(cardItems);         
+        }
+      )
       .catch((err) => console.error(err));
-  }
-
-  render() {
+ 
+      }, []);
+  
     return (
-      <CurrentUserContext.Provider value={this.state.currentUser}>
+      <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
-          <Header />
-          <Main
-            onEditProfile={this.handleEditProfileClick}
-            onEditPlace={this.handleEditPlaceClick}
-            onEditImage={this.handleEditImageClick}
-            onDeletePlace={this.handleEditDeleteClick}
-            onEditAvatar={this.handleEditAvatarClick}
-            cards={this.state.cardItems}
-            onCardLike={this.changeCardLike}
-            onCardDelete={this.handleCardDelete}
+          <Header userMail={userMail} onExit={handleLogout} />
+          <Switch>
+          <ProtectedRoute path="/main"
+            component={Main}
+            loggedIn={loggedIn}          
+            onEditProfile={handleEditProfileClick}
+            onEditPlace={handleEditPlaceClick}
+            onEditImage={handleEditImageClick}
+            onDeletePlace={handleEditDeleteClick}
+            onEditAvatar={handleEditAvatarClick}
+            cards={cards}
+            onCardLike={changeCardLike}
+            onCardDelete={handleCardDelete}
           />
+          <Route path='/signup'>
+              <Register
+                registrationPopupOpen={setRegisterPopupOpen}
+                isOpen={isRegisterPopupOpen}
+                setError={setOnError}
+              />
+            </Route>
+            <Route path='/signin'>
+              <Login handleLogin={handleLogin} onError={onError} setError={setOnError} />
+            </Route>
+            <Route>{loggedIn ? <Redirect to='/main' /> : <Redirect to='/signin' />}</Route>
+          </Switch>
           <Footer />
+          <InfoTooltip isOpen={isRegisterPopupOpen} onClose={closeAllPopups} />
           <PopupWithForm
             name="delete-place"
             title="Вы уверены?"
             buttonName="Да"
-            isOpen={this.state.isDeletePlacePopupOpen}
-            onClose={this.closeAllPopups}
+            isOpen={isDeletePlacePopupOpen}
+            onClose={closeAllPopups}
           />
           <EditProfilePopup
-            isOpen={this.state.isEditProfilePopupOpen}
-            onClose={this.closeAllPopups}
-            onUpdateUser={(name, about) => this.handleUpdateUser(name, about)}
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+            onUpdateUser={(name, about) => handleUpdateUser(name, about)}
           />
 
           <EditAvatarPopup
-            isOpen={this.state.isEditAvatarPopupOpen}
-            onClose={this.closeAllPopups}
-            onUpdateAvatar={({ avatar }) => this.handleUpdateAvatar(avatar)}
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdateAvatar={({ avatar }) => handleUpdateAvatar(avatar)}
           />
 
           <AddPlacePopup            
-            isOpen={this.state.isAddPlacePopupOpen}
-            onClose={this.closeAllPopups}
-            onAddPlace={this.handleAddPlace}
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+            onAddPlace={handleAddPlace}
           />
 
           <PopupWithImage
-            card={this.state.selectedCard}
-            onClose={this.closeAllPopups}
+            card={cardDate}
+            onClose={closeAllPopups}
           />
         </div>
       </CurrentUserContext.Provider>
     );
-  }
+  
 }
 
 export default App;
