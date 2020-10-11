@@ -6,4 +6,6 @@ export const  configApi = {
         "Content-Type": "application/json",
     }
   };
+
+  export const authUrl = 'https://auth.nomoreparties.co';
   

@@ -2,6 +2,17 @@
 @import url('./fonts/inter.css');
 @import url('./blocks/root/root.css');
 @import url('./blocks/header/header.css');
+@import url('./blocks/header/__link/header__link.css');
+@import url('./blocks/header/__user-mail/header__user-mail.css');
+@import url('./blocks/header/__logo/header__logo.css');
+@import url('./blocks/auth/auth.css');
+@import url('./blocks/auth/__error/auth__error.css');
+@import url('./blocks/auth/__form/auth__form.css');
+@import url('./blocks/auth/__input/auth__input.css');
+@import url('./blocks/auth/__inputs/auth__inputs.css');
+@import url('./blocks/auth/__link/auth__link.css');
+@import url('./blocks/auth/__submit-button/auth__submit-button.css');
+@import url('./blocks/auth/__title/auth__title.css');
 @import url('./blocks/profile/profile.css');
 @import url('./blocks/elements/elements.css');
 @import url('./blocks/error/error.css');

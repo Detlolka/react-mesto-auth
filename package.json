@@ -2,10 +2,10 @@
   "name": "mesto-react",
   "author": {
     "name": "Alexey Grinchuk",
-    "email":"detlolka@yahoo.com"
-  } ,
+    "email": "detlolka@yahoo.com"
+  },
   "description": "mesto-react, yandex-praktikum project",
-  "homepage": "https://detlolka.github.io/mesto-react/",
+  "homepage": "https://detlolka.github.io/mesto-react-auth/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,6 +14,7 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
   "scripts": {
