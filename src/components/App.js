@@ -35,6 +35,10 @@ function App() {
             setLoggedIn(true);            
             setUserMail(res.data.email);            
             history.push('/main');
+          } else {
+            localStorage.removeItem('jwt');
+            setLoggedIn(false);
+            setUserMail('');
           }
         })
         .catch((error) => {
