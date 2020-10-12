@@ -20,9 +20,9 @@ function Card({ clickCard, deleteCard, card, onCardDelete, onCardLike }) {
     onCardLike(card)
   }
 
-  const handleDeleteClick = () => {
-    onCardDelete(card._id)
-  }
+  const handleDeleteClick = () => {       
+    onCardDelete(card._id)       
+  } 
 
   return (
     <div className="element">

@@ -12,8 +12,7 @@ const Register = ({ registrationPopupOpen, setError }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     registration(email, password)
-      .then((res) => {
-        console.log(res);
+      .then((res) => {        
         if (res.data) {
           registrationPopupOpen(res);
           setError("");

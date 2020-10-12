@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { useState, useEffect } from 'react';
 import { Route, Switch, useHistory, Redirect } from "react-router-dom";
@@ -121,19 +122,17 @@ function App() {
       .catch((err) => console.error(err));
   };
 
-  const [deleteCard, setDeleteCard] = React.useState({});
+  
+  const [cards, setCards] = useState([]);
 
 //Удаление карточки
-  function removeCard (props) {    
-    handleEditDeleteClick();
-    setDeleteCard(props);
-  }
+   
 
-  function handleCardDelete (cardId) {
+  function handleCardDelete (cardId) {         
     api
       .removeCard(cardId)
       .then((res) => {
-        const newCards = cards.filter((c) => c._id !== deleteCard._id);
+        const newCards = cards.filter((c) => c._id !== cardId);
         setCards(newCards)
       })
       .catch((err) => console.error(err));
@@ -156,7 +155,7 @@ function App() {
   };
 
   //Добавление новой карточки
-  function handleAddPlace (name, link) {
+  function handleAddPlace (name, link) {    
     api
       .createCard(name, link)
       .then((newCard) => {        
@@ -165,7 +164,7 @@ function App() {
       .catch((err) => console.error(err));
   };
 
-  const [cards, setCards] = useState([])
+  
 
   useEffect(() => {
     Promise.all([api.getInitialCards(), api.getUserInfo()])
@@ -203,7 +202,7 @@ function App() {
               />
             </Route>
             <Route path='/signin'>
-              <Login handleLogin={handleLogin} onError={onError} setError={setOnError} />
+              <Login handleLogin={handleLogin} onError={onError} setError={setOnError} registrationPopupOpen={setRegisterPopupOpen} />
             </Route>
             <Route>{loggedIn ? <Redirect to='/main' /> : <Redirect to='/signin' />}</Route>
           </Switch>

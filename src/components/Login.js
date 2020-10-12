@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { authorization } from "../utils/apiAuth";
 
-function Login({ handleLogin, onError, setError }) {
+function Login({ handleLogin, onError, setError, registrationPopupOpen }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,6 +30,7 @@ function Login({ handleLogin, onError, setError }) {
           history.push("/main");
         } else if (data.message) {
           setError(data.message);
+          registrationPopupOpen(true)
         }
       })
       .catch((err) => {
