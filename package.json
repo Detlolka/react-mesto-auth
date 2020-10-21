@@ -5,7 +5,7 @@
     "email": "detlolka@yahoo.com"
   },
   "description": "mesto-react, yandex-praktikum project",
-  "homepage": "https://detlolka.github.io/mesto-react-auth/",
+  "homepage": "http://detlolka.mesto.students.nomoreparties.co/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
