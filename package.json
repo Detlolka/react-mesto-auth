@@ -1,11 +1,11 @@
 {
-  "name": "mesto-react",
+  "name": "mesto-react-full",
   "author": {
     "name": "Alexey Grinchuk",
     "email": "detlolka@yahoo.com"
   },
   "description": "mesto-react, yandex-praktikum project",
-  "homepage": "http://detlolka.mesto.students.nomoreparties.co/",
+  "homepage": "http://detlolka-m.students.nomoreparties.space/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
