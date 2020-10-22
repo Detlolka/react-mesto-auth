@@ -1,6 +1,6 @@
 
 export const  configApi = {
-    baseUrl: "https://api.detlolka-m.students.nomoreparties.space",
+    baseUrl: "http://api.detlolka-m.students.nomoreparties.space",
     headers: {        
         authorization: { Authorization: localStorage.authToken },
         'Content-Type': 'application/json',
@@ -8,5 +8,5 @@ export const  configApi = {
     }
   };
 
-  export const authUrl = 'https://api.detlolka-m.students.nomoreparties.space';
+  export const authUrl = 'http://api.detlolka-m.students.nomoreparties.space';
   

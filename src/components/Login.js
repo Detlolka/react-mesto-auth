@@ -22,7 +22,7 @@ function Login({ handleLogin, onError, setError, registrationPopupOpen }) {
     };
 
     authorization(email, password)
-      .then((data) => {
+      .then((data) => {        
         if (data.token) {
           clearForm();
           handleLogin();

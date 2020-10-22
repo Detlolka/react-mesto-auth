@@ -13,7 +13,7 @@ const Register = ({ registrationPopupOpen, setError }) => {
     evt.preventDefault();
     registration(email, password)
       .then((res) => {        
-        if (res.data) {
+        if (res._id) {
           registrationPopupOpen(res);
           setError("");
           history.push("/signin");
