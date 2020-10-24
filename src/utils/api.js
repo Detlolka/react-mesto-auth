@@ -4,7 +4,7 @@ import { configApi } from './utils.js';
  class Api {
   constructor(options) {
       this._baseUrl = options.baseUrl;
-      this._headers = options.headers;        
+      this._headers = options.headers;                 
   }
   
   _response(res) {
@@ -27,7 +27,7 @@ import { configApi } from './utils.js';
       headers: this._headers,
       body: JSON.stringify({
         name,
-        link
+        link,        
       })      
     })
     .then(this._response)
@@ -61,8 +61,8 @@ import { configApi } from './utils.js';
 
 // GET-запрос на получение данных пользователя
   getUserInfo() {     
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers  
+    return fetch(`${this._baseUrl}/users/me`, {      
+      headers: this._headers
     })
     .then(this._response)    
   }

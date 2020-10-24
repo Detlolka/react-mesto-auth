@@ -9,7 +9,7 @@ function Login({ handleLogin, onError, setError, registrationPopupOpen }) {
 
   const history = useHistory();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt) => {    
     evt.preventDefault();
 
     if (!email || !password) {
@@ -21,9 +21,9 @@ function Login({ handleLogin, onError, setError, registrationPopupOpen }) {
       setPassword("");
     };
 
-    authorization(email, password)
-      .then((data) => {        
-        if (data.token) {
+    authorization(email, password)    
+      .then((data) => {                        
+        if (data.token) {                          
           clearForm();
           handleLogin();
           setError("");

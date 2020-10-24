@@ -27,13 +27,13 @@ function App() {
   const history = useHistory(); 
   
   const checkToken = () => {
-    const jwt = localStorage.getItem('jwt');
+    const jwt = localStorage.getItem('jwt');                
     if (jwt) {
       getContents(jwt)
-        .then((res) => {
-          if (res) {
+        .then((res) => {          
+          if (res) {                                             
             setLoggedIn(true);            
-            setUserMail(res.data.email);            
+            setUserMail(res.email);            
             history.push('/main');
           } else {
             localStorage.removeItem('jwt');
@@ -57,7 +57,7 @@ function App() {
 
   useEffect(() => {
     checkToken();
-  }, [loggedIn]);
+  }, []);
 
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
@@ -70,8 +70,7 @@ function App() {
     name: '',
     about: '',
     avatar: '',
-    _id: '',
-    cohort: '',
+    _id: '',    
   });
   
   function handleEditProfileClick () {    
@@ -110,8 +109,9 @@ function App() {
   function handleUpdateUser (name, about) {
     api
       .changeUserInfo(name, about)
-      .then((user) => {       
-          setCurrentUser(user);        
+      .then((user) => {
+        console.log(user)       
+          setCurrentUser(user.data);        
       })
       .catch((err) => console.error(err));
   };
@@ -121,7 +121,7 @@ function App() {
     api
       .changeAvatar(avatar)
       .then((user) => {
-        setCurrentUser(user);
+        setCurrentUser(user.data);
      })
       .catch((err) => console.error(err));
   };
@@ -129,8 +129,7 @@ function App() {
   
   const [cards, setCards] = useState([]);
 
-//Удаление карточки
-   
+//Удаление карточки 
 
   function handleCardDelete (cardId) {         
     api
@@ -145,7 +144,7 @@ function App() {
   //Постановка лайка и удаление лайка
   function changeCardLike (card) {
     const isLiked = card.likes.some(
-      (i) => i._id === currentUser._id
+      (i) => i === currentUser._id
     );
     api
       .likeCardStatus(card._id, !isLiked)
@@ -159,7 +158,7 @@ function App() {
   };
 
   //Добавление новой карточки
-  function handleAddPlace (name, link) {    
+  function handleAddPlace (name, link ) {    
     api
       .createCard(name, link)
       .then((newCard) => {        
@@ -172,14 +171,15 @@ function App() {
 
   useEffect(() => {
     Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cardItems, user]) => {        
+      .then(([cardItems, user]) => {
+        console.log(cardItems)        
           setCurrentUser(user)
           setCards(cardItems);         
         }
       )
       .catch((err) => console.error(err));
  
-      }, []);
+      }, [loggedIn]);
   
     return (
       <CurrentUserContext.Provider value={currentUser}>

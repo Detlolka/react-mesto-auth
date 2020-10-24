@@ -9,7 +9,7 @@ export const authorization = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((response) => response.json())
-    .then((data) => {      
+    .then((data) => {                      
       localStorage.setItem("jwt", data.token);
       return data;
     })
@@ -37,15 +37,15 @@ export const registration = (email, password) => {
         });
 }
 
-export const getContents = (jwt) => {
+export const getContents = (jwt) => {  
     return fetch(`${authUrl}/users/me`, {
       method: 'GET',
-      headers: {
+      headers: {        
         'Content-Type': 'application/json',
         Authorization: `Bearer ${jwt}`,
       },
     })
-      .then((res) => {
+      .then((res) => {                       
         return res.json();
       })
       .then((data) => data)
