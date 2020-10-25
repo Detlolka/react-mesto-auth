@@ -35,10 +35,9 @@ function App() {
             setLoggedIn(true);            
             setUserMail(res.email);            
             history.push('/main');
-          } else {            
-            localStorage.removeItem('jwt');
-            setLoggedIn(false);
-            setUserMail('');
+          } else {
+            setLoggedIn(false);                       
+            localStorage.removeItem('jwt');            
           }
         })
         .catch((error) => {
@@ -57,7 +56,7 @@ function App() {
 
   useEffect(() => {
     checkToken();
-  }, []);
+  }, [loggedIn]);
 
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
@@ -70,7 +69,7 @@ function App() {
     name: '',
     about: '',
     avatar: '',
-    _id: '',    
+    _id: '',        
   });
   
   function handleEditProfileClick () {    

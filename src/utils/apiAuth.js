@@ -9,7 +9,7 @@ export const authorization = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((response) => response.json())
-    .then((data) => {                           
+    .then((data) => {                                      
       localStorage.setItem("jwt", data.token);
       return data;
     })

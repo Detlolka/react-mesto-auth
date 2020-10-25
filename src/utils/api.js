@@ -15,7 +15,8 @@ import { configApi } from './utils.js';
 
  //GET-запрос карточек
   getInitialCards() {                       
-    return fetch(`${this._baseUrl}/cards`, { headers: {        
+    return fetch(`${this._baseUrl}/cards`, {
+     headers: {        
       authorization: `Bearer ${localStorage.getItem('jwt')}`,
       'Content-Type': 'application/json',        
   }})
