@@ -3,8 +3,7 @@ import { configApi } from './utils.js';
 
  class Api {
   constructor(options) {
-      this._baseUrl = options.baseUrl;
-      this._headers = options.headers;                 
+      this._baseUrl = options.baseUrl;                       
   }
   
   _response(res) {
@@ -16,7 +15,10 @@ import { configApi } from './utils.js';
 
  //GET-запрос карточек
   getInitialCards() {                       
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers})
+    return fetch(`${this._baseUrl}/cards`, { headers: {        
+      authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      'Content-Type': 'application/json',        
+  }})
     .then(this._response)    
 }
 
@@ -24,10 +26,13 @@ import { configApi } from './utils.js';
   createCard (name, link) {  
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {        
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',        
+    },
       body: JSON.stringify({
         name,
-        link,        
+        link,                
       })      
     })
     .then(this._response)
@@ -37,7 +42,10 @@ import { configApi } from './utils.js';
   removeCard(cardId) { 
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers
+      headers: {        
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',        
+    }
     })
     .then(this._response);
   }
@@ -47,13 +55,19 @@ import { configApi } from './utils.js';
     if(isLiked) {  
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
-      headers: this._headers
+      headers: {        
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',        
+    }
     })
     .then(this._response);
    }
    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
     method: 'DELETE',
-    headers: this._headers
+    headers: {        
+      authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      'Content-Type': 'application/json',        
+  }
   })
   .then(this._response);
   }
@@ -62,7 +76,10 @@ import { configApi } from './utils.js';
 // GET-запрос на получение данных пользователя
   getUserInfo() {     
     return fetch(`${this._baseUrl}/users/me`, {      
-      headers: this._headers
+      headers: {        
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',        
+    }
     })
     .then(this._response)    
   }
@@ -71,7 +88,10 @@ import { configApi } from './utils.js';
   changeUserInfo(name, about) {  
     return fetch(`${this._baseUrl}/users/me`, {
         method: 'PATCH',
-        headers: this._headers,
+        headers: {        
+          authorization: `Bearer ${localStorage.getItem('jwt')}`,
+          'Content-Type': 'application/json',        
+      },
         body: JSON.stringify({
             name,
             about
@@ -84,7 +104,10 @@ import { configApi } from './utils.js';
   changeAvatar(avatar) {  
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {        
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',        
+    },
       body: JSON.stringify({
         avatar
       })

@@ -1,12 +1,9 @@
 
 export const  configApi = {
-    baseUrl: "http://localhost:3000",
-    headers: {        
-        authorization: `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-Type': 'application/json',        
-    }
+    baseUrl: 'http://api.detlolka-m.students.nomoreparties.space',
+    
   };
 
 
-  export const authUrl = 'http://localhost:3000';
+  export const authUrl = 'http://api.detlolka-m.students.nomoreparties.space';
   

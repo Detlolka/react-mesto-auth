@@ -8,7 +8,7 @@ function Header({ userMail, onExit }) {
   const exit = () => {
     onExit();
     localStorage.removeItem("jwt");
-    history.push("/login");
+    history.push("/signin");
   };
 
   return (

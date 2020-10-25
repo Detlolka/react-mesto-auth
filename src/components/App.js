@@ -27,7 +27,7 @@ function App() {
   const history = useHistory(); 
   
   const checkToken = () => {
-    const jwt = localStorage.getItem('jwt');                
+    const jwt = localStorage.getItem('jwt');                    
     if (jwt) {
       getContents(jwt)
         .then((res) => {          
@@ -35,7 +35,7 @@ function App() {
             setLoggedIn(true);            
             setUserMail(res.email);            
             history.push('/main');
-          } else {
+          } else {            
             localStorage.removeItem('jwt');
             setLoggedIn(false);
             setUserMail('');
@@ -109,8 +109,7 @@ function App() {
   function handleUpdateUser (name, about) {
     api
       .changeUserInfo(name, about)
-      .then((user) => {
-        console.log(user)       
+      .then((user) => {               
           setCurrentUser(user.data);        
       })
       .catch((err) => console.error(err));
@@ -144,7 +143,7 @@ function App() {
   //Постановка лайка и удаление лайка
   function changeCardLike (card) {
     const isLiked = card.likes.some(
-      (i) => i === currentUser._id
+      (i) => i._id === currentUser._id
     );
     api
       .likeCardStatus(card._id, !isLiked)
@@ -158,7 +157,7 @@ function App() {
   };
 
   //Добавление новой карточки
-  function handleAddPlace (name, link ) {    
+  function handleAddPlace (name, link) {    
     api
       .createCard(name, link)
       .then((newCard) => {        
@@ -171,8 +170,7 @@ function App() {
 
   useEffect(() => {
     Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cardItems, user]) => {
-        console.log(cardItems)        
+      .then(([cardItems, user]) => {                
           setCurrentUser(user)
           setCards(cardItems);         
         }
@@ -234,7 +232,7 @@ function App() {
           <AddPlacePopup            
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
-            onAddPlace={handleAddPlace}
+            onAddPlace={handleAddPlace}            
           />
 
           <PopupWithImage

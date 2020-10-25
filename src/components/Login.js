@@ -21,7 +21,7 @@ function Login({ handleLogin, onError, setError, registrationPopupOpen }) {
       setPassword("");
     };
 
-    authorization(email, password)    
+    authorization(email, password)        
       .then((data) => {                        
         if (data.token) {                          
           clearForm();
