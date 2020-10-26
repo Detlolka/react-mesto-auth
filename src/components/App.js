@@ -104,6 +104,25 @@ function App() {
       setRegisterPopupOpen(false);    
   }
 
+  // Закрытие попаов на Оверлей
+
+  function closeOverlay (evt) {
+    if (evt.target.classList.contains('popup_opened')) {
+      closeAllPopups();
+    }
+  }
+
+  document.addEventListener('click', closeOverlay);
+
+  // Закрытие попапов на Escape
+  function closeEsc (evt) {
+    if (evt.key === 'Escape') {
+      closeAllPopups();
+    }
+  }
+
+  document.addEventListener('keydown', closeEsc);
+
   //смена данных пользователя
   function handleUpdateUser (name, about) {
     api

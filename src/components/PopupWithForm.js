@@ -4,8 +4,8 @@ function PopupWithForm({name, title, buttonName, isOpen, onClose, children, onSu
   return (
     <div
       className={
-        `popup popup_${name} ` + (isOpen && "popup_opened")
-      }
+        `popup popup_${name} ` + (isOpen && "popup_opened")        
+      }      
     >
       <div className="popup__container">
         <form
