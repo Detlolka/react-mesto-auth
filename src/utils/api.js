@@ -54,7 +54,7 @@ import { configApi } from './utils.js';
 // PUT и DELETE запросы на лайк
   likeCardStatus(cardId, isLiked) {
     if(isLiked) {  
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: {        
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -63,7 +63,7 @@ import { configApi } from './utils.js';
     })
     .then(this._response);
    }
-   return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+   return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
     method: 'DELETE',
     headers: {        
       authorization: `Bearer ${localStorage.getItem('jwt')}`,
