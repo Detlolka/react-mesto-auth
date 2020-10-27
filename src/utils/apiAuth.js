@@ -48,7 +48,7 @@ export const getContents = (jwt) => {
       .then((res) => {                               
         return res.json();
       })
-      .then((data) => data)
+      .then((data) =>  data)
       .catch((error) => {
         console.error(error);
       });

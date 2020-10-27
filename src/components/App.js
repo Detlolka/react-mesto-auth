@@ -105,7 +105,6 @@ function App() {
   }
 
   // Закрытие попаов на Оверлей
-
   function closeOverlay (evt) {
     if (evt.target.classList.contains('popup_opened')) {
       closeAllPopups();
@@ -178,7 +177,8 @@ function App() {
   function handleAddPlace (name, link) {    
     api
       .createCard(name, link)
-      .then((newCard) => {        
+      .then((newCard) => {
+        console.log(newCard)        
           setCards([newCard, ...cards])        
       })
       .catch((err) => console.error(err));
