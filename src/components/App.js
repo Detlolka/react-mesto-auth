@@ -187,14 +187,15 @@ function App() {
   
 
   useEffect(() => {
+    if (loggedIn) {
     Promise.all([api.getInitialCards(), api.getUserInfo()])
       .then(([cardItems, user]) => {                
           setCurrentUser(user)
           setCards(cardItems);         
         }
-      )
+      )    
       .catch((err) => console.error(err));
- 
+    } 
       }, [loggedIn]);
   
     return (
